@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mini-curso · Claude para tráfego e criativo · Pareto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#11161e;--slate:#2b313b;--ink:#222;--white:#fff;--sec:#f2f2f2;
+  --muted:#7c8aa0;--line:rgba(17,22,30,.12);
+  --title:"Fraunces",Georgia,serif;--body:"Jost",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);font-weight:300;color:var(--ink);background:#0c1016;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--navy)}
+.hero{position:relative;background:var(--navy);color:#f2f2f2;padding:72px 28px 56px;
+  background-image:linear-gradient(rgba(242,242,242,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(242,242,242,.06) 1px,transparent 1px);background-size:48px 48px}
+.hero::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,#2b313b,#8f9bb0,#2b313b)}
+.hero-inner,.nav-inner,.wrap{max-width:920px;margin:0 auto}
+.eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:#8f9bb0;margin-bottom:14px}
+.hero h1{font-family:var(--title);font-weight:500;font-size:clamp(34px,5vw,52px);line-height:1.08;letter-spacing:-.02em;max-width:18ch}
+.hero .sub{margin-top:18px;font-size:20px;color:rgba(229,229,229,.75);max-width:42ch}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.chip{border:1px solid rgba(242,242,242,.2);border-radius:999px;padding:8px 14px;font-size:13px;color:rgba(242,242,242,.8)}
+.btn{display:inline-flex;align-items:center;background:var(--white);color:var(--navy)!important;text-decoration:none;font-weight:500;font-size:15px;padding:13px 20px;border-radius:999px;margin:8px 8px 0 0}
+.btn.ghost{background:transparent;color:#fff!important;border:1px solid rgba(242,242,242,.28)}
+.nav{position:sticky;top:0;z-index:20;background:rgba(12,16,22,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(242,242,242,.1);padding:12px 20px}
+.nav-inner{display:flex;flex-wrap:wrap;gap:8px 16px}
+.nav a{color:rgba(242,242,242,.7);text-decoration:none;font-size:13px}
+.nav a:hover{color:#fff}
+.wrap{padding:8px 20px 96px}
+.mod{background:var(--white);border-radius:22px;padding:40px 36px;margin:24px 0;border:1px solid var(--line);break-inside:avoid}
+.mod.alt{background:var(--sec)}
+.mod-label{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--muted);margin-bottom:8px}
+.mod h2{font-family:var(--title);font-weight:500;font-size:30px;line-height:1.15;color:var(--navy);margin-bottom:10px}
+.mod h3{font-family:var(--title);font-weight:500;font-size:20px;margin:24px 0 8px;color:var(--navy)}
+.mod h4{font-family:var(--title);font-weight:500;font-size:17px;margin-bottom:6px;color:var(--navy)}
+.mod p,.mod li{font-size:17px;color:var(--slate)}
+.mod ul,.mod ol{padding-left:1.15em;margin:8px 0 14px;display:flex;flex-direction:column;gap:7px}
+.obj{background:var(--navy);color:rgba(242,242,242,.88);border-radius:14px;padding:16px 18px;margin:14px 0 18px;font-size:15px}
+.obj b{display:block;font-family:var(--title);font-size:17px;color:#fff;margin-bottom:6px;font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}.mod{padding:28px 20px}}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--muted);margin-bottom:6px}
+.prompt{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;font-weight:400;color:var(--navy);margin:8px 0 12px}
+.file{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:var(--sec);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.step{display:grid;grid-template-columns:48px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.step:last-of-type{border-bottom:0}
+.step .n{font-family:var(--title);font-size:28px;font-weight:500;color:var(--navy)}
+.mock{margin-top:10px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.mock-bar{background:var(--navy);color:rgba(242,242,242,.65);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px}
+.mock-body{padding:12px 14px;font-size:14px;background:#fff;color:var(--slate)}
+.hi{background:rgba(124,138,160,.16);border:1px dashed #7c8aa0;border-radius:8px;padding:8px 10px;margin:8px 0;color:var(--navy)}
+.practice{border-left:3px solid var(--navy);padding:12px 0 12px 16px;margin:16px 0;background:rgba(17,22,30,.03);border-radius:0 12px 12px 0}
+.practice strong{display:block;font-family:var(--title);font-size:18px;margin-bottom:6px}
+.check{list-style:none;padding:0}
+.check li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px}
+.check li::before{content:"☐";font-size:18px;line-height:1.2;color:var(--muted)}
+.progress{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:20px 0 0}
+.progress a{text-decoration:none;border:1px solid rgba(242,242,242,.2);border-radius:12px;padding:12px 10px;color:rgba(242,242,242,.8);font-size:12px;text-align:center}
+.progress b{display:block;font-family:var(--title);font-size:18px;color:#fff;margin-bottom:4px;font-weight:500}
+.lesson-audio{margin:16px 0 20px;padding:16px 18px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(180deg,#fff 0%,var(--sec) 100%)}
+.mod.alt .lesson-audio{background:#fff}
+.lesson-audio .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.lesson-audio .head strong{font-family:var(--title);font-size:18px;font-weight:500;color:var(--navy)}
+.lesson-audio .head span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lesson-audio audio{width:100%;margin-top:6px}
+.transcript{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.transcript summary{cursor:pointer;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;list-style:none}
+.transcript p{margin-top:8px;font-size:15px;color:var(--slate);line-height:1.5}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.foot{text-align:center;color:rgba(229,229,229,.45);padding:32px 16px 48px;font-size:13px}
+.note-pdf{display:none}
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  body{background:#fff;color:#111}
+  .nav,.btn,audio,.hero .btn,a.btn{display:none!important}
+  .note-pdf{display:block;margin-top:14px;font-size:13px;color:#555}
+  .hero{background:#11161e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:36px 24px;border-radius:0}
+  .progress a{border-color:rgba(255,255,255,.35);color:#eee}
+  .wrap{padding:0;max-width:none}
+  .mod{break-inside:avoid;page-break-inside:avoid;margin:16px 0;border-radius:12px;box-shadow:none}
+  .obj{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .transcript{display:block!important}
+  .transcript summary{display:none}
+  .transcript p{margin-top:0;font-size:13px}
+  .foot{color:#666}
+  a{text-decoration:none;color:inherit}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Pareto Academy · módulo interno</p>
+    <h1>Claude no dia a dia de tráfego e criativo</h1>
+    <p class="sub">Mini-curso com narração na voz do Victor em cada etapa. Instale as habilidades, peça certo, valide o resultado.</p>
+    <div class="meta">
+      <span class="chip">~45–60 min</span>
+      <span class="chip">5 módulos</span>
+      <span class="chip">9 áudios · voz Victor</span>
+      <span class="chip">8 skills</span>
+    </div>
+    <p class="note-pdf">Versão PDF: texto completo + transcrição de cada fala. Para ouvir os áudios, abra <strong>curso-interativo/index.html</strong> no mesmo zip.</p>
+    <div style="margin-top:22px">
+      <a class="btn" href="pareto-skills-time-20261019.zip">Baixar material do curso (.zip)</a>
+      <a class="btn ghost" href="#m0">Começar pelo Módulo 0</a>
+    </div>
+    <div class="progress">
+      <a href="#m0"><b>0</b>Setup</a>
+      <a href="#m1"><b>1</b>Site</a>
+      <a href="#m2"><b>2</b>SEO</a>
+      <a href="#m3"><b>3</b>Deck</a>
+      <a href="#m4"><b>4</b>Instagram</a>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="nav-inner">
+  <a href="#sobre">Sobre</a>
+  <a href="#m0">0 · Setup</a>
+  <a href="#m1">1 · Site</a>
+  <a href="#m2">2 · SEO</a>
+  <a href="#m3">3 · Deck</a>
+  <a href="#m4">4 · Instagram</a>
+  <a href="#final">Conclusão</a>
+</div></nav>
+
+<main class="wrap">
+
+<section class="mod" id="sobre">
+  <span class="badge">Abertura</span>
+  <h2>O que você vai saber fazer ao terminar</h2>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>00 · abertura · 17s</span></div>
+    <audio controls preload="metadata" src="narracoes/00-abertura.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Olá, pessoal. Aqui é o Victor Santana. Este é o mini-curso de Claude para o time de tráfego e criativo da Pareto. Em cerca de uma hora você sobe as habilidades no seu Claude, aprende a pedir certo, e sabe quando a resposta presta. Vamos começar pelo setup. Sem isso, o resto não funciona.</p>
+    </details>
+  </div>
+  <div class="obj">
+    <b>Objetivos do curso</b>
+    Subir as habilidades no seu Claude · pedir site, SEO, deck e Instagram no formato certo · reconhecer se a resposta presta · nunca publicar sem OK humano.
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <p class="k">Para quem</p>
+      <h4>Time de mídia e criativo</h4>
+      <p>Gestão de tráfego, análise criativa, campanhas, apresentações.</p>
+    </div>
+    <div class="card">
+      <p class="k">O que você precisa</p>
+      <h4>Conta Claude + pacote</h4>
+      <p>Plano com Skills. Arquivo <span class="file">pareto-skills-time-20261019.zip</span>.</p>
+    </div>
+  </div>
+  <h3>Como estudar</h3>
+  <ol>
+    <li>Ouça o áudio do módulo antes de praticar.</li>
+    <li>Faça o Módulo 0 inteiro antes dos outros.</li>
+    <li>Em cada módulo: ouça → leia → pratique → checklist.</li>
+    <li>No fim, rode o desafio final.</li>
+  </ol>
+</section>
+
+<section class="mod alt" id="m0">
+  <p class="mod-label">Módulo 0 · 15–20 min</p>
+  <h2>Setup: baixar, instalar e validar</h2>
+  <div class="obj"><b>Ao sair daqui</b>As 8 skills estão na lista do Claude, ligadas, e um teste passou.</div>
+
+  <h3>Aula 0.1 — Pegue o material</h3>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>01 · baixar · 15s</span></div>
+    <audio controls preload="metadata" src="narracoes/01-setup-baixar.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Módulo zero, parte um. Baixe o arquivo pareto-skills-time. Extraia a pasta. Dentro você vai ver oito arquivos zip, um por habilidade, e um leia-me. Não envie a pasta solta e não envie só o arquivo skill.md. O Claude aceita o zip de cada habilidade.</p>
+    </details>
+  </div>
+  <ol>
+    <li>Baixe <span class="file">pareto-skills-time-20261019.zip</span> (está neste pacote).</li>
+    <li>Extraia. Dentro: 8 zips + <span class="file">LEIA-ME.txt</span>.</li>
+    <li>Não envie pasta solta nem só <span class="file">SKILL.md</span> — o Claude quer o <strong>.zip</strong>.</li>
+  </ol>
+  <p><strong>Nomes exatos para upload:</strong> <span class="file">criar-site.zip</span> · <span class="file">otimizar-site.zip</span> · <span class="file">seo-geo-auditar.zip</span> · <span class="file">seo-geo-cronograma.zip</span> · <span class="file">html.executivo.zip</span> · <span class="file">pareto-meta-day.zip</span> · <span class="file">instagram-analisar.zip</span> · <span class="file">instagram-criar.zip</span></p>
+
+  <h3>Aula 0.2 — Instale no Claude</h3>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>02 · instalar · 20s</span></div>
+    <audio controls preload="metadata" src="narracoes/02-setup-instalar.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Parte dois. No Claude, abra Settings, depois Capabilities, e ligue Code execution and file creation. Em seguida abra Customize, Skills. Clique no mais, Create skill, Upload a skill. Envie um zip por vez. Confira se o nome aparece na lista e deixe o interruptor ligado. Repita até subir os oito.</p>
+    </details>
+  </div>
+  <div class="step">
+    <div class="n">1</div>
+    <div>
+      <h4>Settings → Capabilities</h4>
+      <p>Ative <strong>Code execution and file creation</strong>.</p>
+      <div class="mock"><div class="mock-bar">Claude · Settings</div><div class="mock-body">Capabilities<div class="hi">☑ Code execution and file creation</div></div></div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">2</div>
+    <div>
+      <h4>Customize → Skills</h4>
+      <div class="mock"><div class="mock-bar">Claude · Customize</div><div class="mock-body">Customize → <strong>Skills</strong> → botão <strong>+</strong></div></div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">3</div>
+    <div>
+      <h4>Upload a skill (8 vezes)</h4>
+      <ol>
+        <li><strong>+</strong> → Create skill → Upload a skill</li>
+        <li>Escolha um zip (ex.: <span class="file">criar-site.zip</span>)</li>
+        <li>Nome na lista + interruptor <strong>ligado</strong></li>
+        <li>Repita até os 8</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3>Aula 0.3 — Teste de fumaça</h3>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>03 · teste · 22s</span></div>
+    <audio controls preload="metadata" src="narracoes/03-setup-teste.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Parte três, o teste. Abra um chat novo e cole: usa a habilidade criar-site, faz só o briefing e a direção da primeira tela para uma landing fictícia da marca Curso Exemplo, não publique. Passou se veio briefing ou poucas perguntas, falou em primeira tela, e não tentou publicar no ar. Se falhar, confira o interruptor, o Code execution, e diga o nome da habilidade no pedido.</p>
+    </details>
+  </div>
+  <div class="prompt">“Usa a habilidade criar-site. Faça só o briefing e a direção da primeira tela para uma landing fictícia da marca Curso Exemplo. Não publique.”</div>
+  <p><strong>Passou se:</strong> briefing/direção (ou poucas perguntas), falou em primeira tela, não tentou publicar.</p>
+  <div class="practice"><strong>Prática 0</strong>Suba as 8 skills e rode o teste. Se falhar: interruptor, Code execution, diga o nome da habilidade no pedido.</div>
+  <ul class="check">
+    <li>Pacote baixado</li>
+    <li>Code execution ligado</li>
+    <li>8 skills on</li>
+    <li>Teste passou</li>
+  </ul>
+</section>
+
+<section class="mod" id="m1">
+  <p class="mod-label">Módulo 1 · 10–12 min</p>
+  <h2>Sites: criar e otimizar</h2>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>04 · site · 20s</span></div>
+    <audio controls preload="metadata" src="narracoes/04-site.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Módulo um, sites. Use criar-site quando a página ainda não existe. Use otimizar-site quando a URL já está no ar. Em criar, o resultado bom é briefing, direção visual, primeira tela para você aprovar, depois o restante, e nada sobe sozinho para domínio. Em otimizar, o resultado bom é diagnóstico, cópia melhorada, lista do que mudou, e antes e depois. O site público só muda com o seu OK.</p>
+    </details>
+  </div>
+  <div class="obj"><b>Ao sair daqui</b>Você escolhe a skill certa e reconhece uma entrega completa.</div>
+  <div class="grid2">
+    <div class="card">
+      <p class="k">criar-site.zip</p>
+      <h4>Criar do zero</h4>
+      <div class="prompt">“Cria um site profissional para [marca]. Tipo: landing. Objetivo: captar lead. Não publicar sem OK.”</div>
+      <p><strong>Resultado bom:</strong> briefing → direção → primeira tela para aprovar → resto do site → otimização. Arquivos do projeto, não um print solto.</p>
+    </div>
+    <div class="card">
+      <p class="k">otimizar-site.zip</p>
+      <h4>Melhorar o que existe</h4>
+      <div class="prompt">“Otimiza este site: [URL]. Foco: design e velocidade. Trabalha em cópia; não altera o ao vivo.”</div>
+      <p><strong>Resultado bom:</strong> diagnóstico → cópia melhorada → lista do que mudou → antes/depois.</p>
+    </div>
+  </div>
+  <div class="practice"><strong>Prática 1</strong>Landing fictícia “Studio Norte” (criar-site). Depois otimizar-site em uma URL pública com foco em clareza.</div>
+  <ul class="check">
+    <li>Sei criar vs otimizar</li>
+    <li>Rodei um pedido de cada</li>
+    <li>Sei dizer se veio completo ou raso</li>
+  </ul>
+</section>
+
+<section class="mod alt" id="m2">
+  <p class="mod-label">Módulo 2 · 8–10 min</p>
+  <h2>SEO: diagnosticar e planejar</h2>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>05 · SEO · 15s</span></div>
+    <audio controls preload="metadata" src="narracoes/05-seo.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Módulo dois, SEO. Suba seo-geo-auditar e seo-geo-cronograma. Peça: audita SEO e GEO desta URL, depois monta o cronograma priorizado. Resultado bom separa o que está confirmado do que é hipótese, traz evidência, e lista ações na ordem. Resultado ruim inventa ranking ou promete tráfego sem base. Não aceite isso.</p>
+    </details>
+  </div>
+  <div class="obj"><b>Ao sair daqui</b>Você roda auditoria + cronograma e rejeita ranking inventado.</div>
+  <div class="prompt">“Audita SEO e GEO de [URL]. Depois monta o cronograma priorizado.”</div>
+  <p><strong>Bom:</strong> confirmado vs hipótese + evidência + ações na ordem. <strong>Ruim:</strong> “vamos para a 1ª posição” sem base.</p>
+  <div class="practice"><strong>Prática 2</strong>Audite um site do portfólio. Marque 3 ações da primeira semana.</div>
+  <ul class="check"><li>Rodei auditar + cronograma</li><li>Separei fato de chute</li></ul>
+</section>
+
+<section class="mod" id="m3">
+  <p class="mod-label">Módulo 3 · 8–10 min</p>
+  <h2>Deck HTML sem jargão (Meta Day)</h2>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>06 · deck · 15s</span></div>
+    <audio controls preload="metadata" src="narracoes/06-deck.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Módulo três, apresentação. Suba html.executivo e pareto-meta-day, os dois. Peça um HTML executivo no padrão Meta Day, diga o público e a decisão que o material precisa provocar, sem slogans. Resultado bom é HTML navegável, visual azul e aço da Pareto, e em cada número: o que significa, comparado a quê, e o que fazer.</p>
+    </details>
+  </div>
+  <div class="obj"><b>Ao sair daqui</b>Você exige significado + ação em cada número.</div>
+  <p>Arquivos: <span class="file">html.executivo.zip</span> + <span class="file">pareto-meta-day.zip</span>.</p>
+  <div class="prompt">“Monta HTML executivo Meta Day. Público: gestor de tráfego. Decisão: onde cortar verba esta semana. Sem slogans. 4 slides.”</div>
+  <p><strong>Bom:</strong> HTML navegável; visual Pareto; cada número com significado · comparação · ação.</p>
+  <div class="practice"><strong>Prática 3</strong>4 slides sobre “3 criativos de teste”. Recuse número empilhado sem “e daí?”.</div>
+  <ul class="check"><li>Gerei um HTML Meta Day</li><li>Apliquei o teste “e daí?”</li></ul>
+</section>
+
+<section class="mod alt" id="m4">
+  <p class="mod-label">Módulo 4 · 8–10 min</p>
+  <h2>Instagram: diagnóstico e plano</h2>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>07 · Instagram · 11s</span></div>
+    <audio controls preload="metadata" src="narracoes/07-instagram.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Módulo quatro, Instagram. Use instagram-analisar para diagnóstico e cinco ideias, só leitura. Depois instagram-criar para plano da semana ou roteiro de reel, só planejamento. Nada publica sozinho. A postagem continua humana.</p>
+    </details>
+  </div>
+  <div class="obj"><b>Ao sair daqui</b>Diagnóstico + plano, sem publicar.</div>
+  <div class="grid2">
+    <div class="card">
+      <p class="k">instagram-analisar.zip</p>
+      <div class="prompt">“Analisa @[conta]: bio, feed, gancho dos 3s. Diagnóstico + 5 ideias. Não publica.”</div>
+    </div>
+    <div class="card">
+      <p class="k">instagram-criar.zip</p>
+      <div class="prompt">“Com base na análise, plano da semana + 1 roteiro de reel. Só planeja.”</div>
+    </div>
+  </div>
+  <div class="practice"><strong>Prática 4</strong>Analise um perfil do nicho + 1 reel. Confirme que nada foi publicado.</div>
+  <ul class="check"><li>Rodei analisar + criar</li><li>Peça utilizável sem post automático</li></ul>
+</section>
+
+<section class="mod" id="final">
+  <span class="badge">Conclusão</span>
+  <h2>Desafio final</h2>
+  
+  <div class="lesson-audio">
+    <div class="head"><strong>Ouça o Victor</strong><span>08 · desafio · 23s</span></div>
+    <audio controls preload="metadata" src="narracoes/08-desafio-final.mp3"></audio>
+    <details class="transcript" open>
+      <summary>Transcrição da fala</summary>
+      <p>Desafio final. Em sequência, entregue: uma primeira tela de landing fictícia com criar-site, três ações de SEO para uma URL real, dois slides Meta Day sobre a prioridade da semana, e uma ideia de reel ligada a essa prioridade. Você concluiu o curso se o setup está ok, essas quatro entregas existem, e nada foi publicado automaticamente. Qualquer dúvida, me chama. Bora.</p>
+    </details>
+  </div>
+  <ol>
+    <li>Primeira tela de landing fictícia (criar-site)</li>
+    <li>3 ações de SEO para URL real</li>
+    <li>2 slides Meta Day sobre a prioridade da semana</li>
+    <li>1 ideia de reel ligada a essa prioridade</li>
+  </ol>
+  <p><strong>Concluiu se:</strong> setup ok · quatro entregas existem · zero publicação automática.</p>
+  <p style="margin-top:14px">Próximo módulo de produto: GTM + Ads.</p>
+  <p style="margin-top:18px;font-size:14px;color:var(--muted)">Narrações geradas com clone Runway (seed_audio) a partir da referência limpa da voz do Victor.</p>
+</section>
+
+</main>
+<footer class="foot">Pareto · Mini-curso Claude · voz Victor · 19/10/2026</footer>
+<script>
+document.querySelectorAll('audio').forEach(a => {
+  a.addEventListener('play', () => {
+    document.querySelectorAll('audio').forEach(o => { if (o !== a) o.pause(); });
+  });
+});
+</script>
+</body>
+</html>
